@@ -1,5 +1,6 @@
 // ============================================================
-// BALANCE CORE MÉXICO — App Logic (Versión Producción Blindada)
+// BALANCE CORE MÉXICO — Lógica de Producción (Local & Autónoma)
+// Diseñado para GitHub Pages · Blindado para jsPDF sin APIs externas
 // ============================================================
 
 let currentAnalysis = null;
@@ -16,7 +17,7 @@ async function generateAnalysis() {
     return;
   }
 
-  // Animación de carga en la interfaz
+  // Estado de carga visual en la interfaz (Efecto Cosmos)
   const btn = document.getElementById('generateBtn');
   btn.disabled = true;
   btn.querySelector('.btn-text').style.display = 'none';
@@ -27,14 +28,15 @@ async function generateAnalysis() {
   document.getElementById('pdfBtn').style.display = 'none';
   document.getElementById('aiContent').innerHTML = `<div class="loading-pulses"><div class="lp"></div><div class="lp"></div><div class="lp"></div></div>`;
 
-  // Cargar datos del archivo data.js externo
+  // Cargar indicadores reales desde data.js
   const iim = getIIM(state);
   const ime = getIME(state);
   const agua = getAgua(state);
   const internet2023 = DATA.internet['2023'];
 
-  // Calcular puntuaciones del modelo
+  // Procesar puntuaciones del Balance Core (0 a 100)
   const dimScores = {};
+  
   if (dims.includes('estructura')) {
     const gmMap = { 'Muy bajo': 92, 'Bajo': 75, 'Medio': 55, 'Alto': 35, 'Muy alto': 15 };
     dimScores.estructura = gmMap[ime?.GM_2020] || 50;
@@ -58,60 +60,59 @@ async function generateAnalysis() {
 
   const overallScore = Math.round(Object.values(dimScores).reduce((a, b) => a + b, 0) / Object.keys(dimScores).length);
 
-  // Renderizar gráficos en pantalla
+  // Pintar los componentes interactivos en pantalla
   renderDimCards(state, dims, dimScores, iim, ime, agua);
   if(document.getElementById('stateBadge')) {
     document.getElementById('stateBadge').textContent = state.toUpperCase();
   }
   animateScore(overallScore);
 
-  // Espera visual simulada del cosmos
+  // Retraso estético calculado para emular el procesamiento analítico del modelo
   await new Promise(resolve => setTimeout(resolve, 1500));
 
-  // Texto analítico formateado sin caracteres ocultos incompatibles
-  const aiText = `### 1. Diagnostico del Desequilibrio
-El estado de ${state} presenta un patron de desequilibrio sistemico que el marco del Balance Core identifica como critico para el desarrollo integral de sus comunidades. Los datos disponibles revelan tensiones estructurales acumuladas que afectan la cohesion social, la movilidad economica y la resiliencia territorial. La brecha entre las capacidades institucionales instaladas y las necesidades reales de la poblacion genera un ciclo de marginacion que se retroalimenta en multiples dimensiones simultaneamente.
+  // Generación dinámica del texto estratégico basada en métricas reales del estado
+  const marginacionLabel = ime ? ime.GM_2020 : 'No disponible';
+  const migracionLabel = iim ? iim.gim_dp2 : 'No disponible';
+  const numAcuiferos = agua ? agua.acuiferos : 0;
 
-En el plano de la Estructura, los indicadores de marginacion reflejan una distribucion desigual del acceso a servicios basicos, educacion y oportunidades laborales formales. Esto no es solo un problema economico: es una fractura en el tejido institucional que limita la agencia ciudadana y erosiona la confianza en las instituciones del estado. Desde la perspectiva de la Identidad, la dinamica migratoria revela una perdida de capital humano que debilita las redes comunitarias locales y genera dependencia de remesas como sustituto de politicas de desarrollo endogeno sostenido. La Conectividad digital sigue siendo un privilegio y no un derecho efectivo, ampliando la brecha generacional y de genero con cada ano que pasa sin intervencion deliberada. Finalmente, la presion sobre los recursos hidricos subterraneos evidencia un deficit en la Etica Planetaria, con riesgos de sobreexplotacion que comprometen la viabilidad futura del territorio para ${state}.
+  const aiText = `### 1. Diagnostico del Desequilibrio
+El estado de ${state} presenta un patron de desequilibrio sistemico analizado bajo el marco conceptual del Balance Core. Los datos de diagnostico territorial revelan un Indice de Marginacion Estatal clasificado como un grado ${marginacionLabel}, lo que evidencia retos profundos en la distribucion de infraestructura y el acceso equitativo a servicios basicos. Adicionalmente, el Indice de Intensidad Migratoria se ubica en un nivel ${migracionLabel}, senalando un flujo constante de capital humano que impacta directamente en el tejido social y la cohesion comunitaria. En el ambito ecologico, el registro de ${numAcuiferos} acuiferos prioritarios plantea la urgencia de establecer politicas de sustentabilidad hidrica para mitigar riesgos de estres ambiental y asegurar la viabilidad del desarrollo regional a largo plazo.
 
 ### 2. 3 Politicas Publicas Prioritarias
-* Politica 1: Programa de Infraestructura Social Integrada
+* Politica 1: Programa de Infraestructura Social Cohesionada
 - Dimension: Estructura
-- Justificacion: Los indicadores de marginacion de ${state} senalan deficits estructurales de acceso. La falta de infraestructura adecuada limita el bienestar inmediato y aleja al estado del umbral de equilibrio.
+- Justificacion: Dado el grado de marginacion ${marginacionLabel} detectado en ${state}, es prioritario optimizar los servicios publicos esenciales en los municipios mas vulnerables para reestablecer el equilibrio estructural.
 - Acciones concretas:
-  - Diagnostico participativo por municipio para priorizar inversion en agua y drenaje.
-  - Creacion de consorcios intermunicipales para gestion eficiente de recursos.
-  - Vinculacion con programas de educacion tecnica local.
-- Indicador de exito: Reduccion del 20% en el indice de carencias basicas en 36 meses.
+  - Diseno de un mapa de calor participativo para focalizar obras publicas prioritarias de agua, drenaje y electrificacion.
+  - Creacion de comites ciudadanos de contraloria social para supervisar la transparencia en la ejecucion del gasto.
+- Indicador de exito: Disminucion progresiva de las carencias por servicios basicos residenciales en un horizonte de 36 meses.
 
-* Politica 2: Red de Arraigo e Identidad Comunitaria
+* Politica 2: Red Institucional de Arraigo e Identidad Regional
 - Dimension: Identidad
-- Justificacion: La intensidad migratoria hacia el exterior en ${state} indica una salida significativa de poblacion joven. Revertir esto requiere construir condiciones de vida digna en sus regiones de origen.
+- Justificacion: La intensidad migratoria de nivel ${migracionLabel} en ${state} exige politicas deliberadas para retener el talento joven y canalizar productivamente las remesas familiares.
 - Acciones concretas:
-  - Fondo de emprendimiento local para migrantes de retorno con capital semilla.
-  - Plataforma digital de vinculacion de proyectos productivos con la diaspora.
-  - Incentivos fiscales para empresas que contraten y arraiguen jovenes locales.
-- Indicador de exito: Aumento del 15% en la tasa de retencion de poblacion de 20-35 anos.
+  - Lanzamiento de fondos de coinversion publica para proyectos productivos impulsados por migrantes en retorno.
+  - Implementacion de incubadoras de empresas comunitarias enfocadas en sectores tecnologicos e identitarios.
+- Indicador de exito: Incremento medible en la tasa de retencion laboral interna de la poblacion de 18 a 35 anos.
 
-* Politica 3: Conectividad Universal y Gestion Hidrica Sostenible
+* Politica 3: Gobernanza Digital y Sostenibilidad Hidrica Local
 - Dimension: Conectividad y Etica Planetaria
-- Justificacion: La brecha digital en ${state} frena la equidad, mientras que la gestion de acuiferos locales requiere modernizacion urgente ante los riesgos de estres hidrico.
+- Justificacion: Equilibrar el entorno tecnologico con el cuidado de los recursos naturales del estado es vital para proyectar un crecimiento soberano y de vanguardia.
 - Acciones concretas:
-  - Despliegue de infraestructura de banda ancha en zonas rurales con subsidio.
-  - Centros comunitarios digitales para cerrar brechas de genero y edad.
-  - Monitoreo en tiempo real de los acuiferos y reglamentacion participativa de extraccion.
-- Indicador de exito: Cobertura de internet al 70% de hogares y control de extraccion acuifera.
+  - Despliegue de nodos publicos de conectividad digital universal en escuelas y plazas comunitarias.
+  - Modernizacion de los sistemas de monitoreo hidrico subterraneo para regular la extraccion de los ${numAcuiferos} acuiferos de la region.
+- Indicador de exito: Lograr una cobertura de conectividad digital efectiva del 70% en zonas rurales en un plazo de 3 anos.
 
 ### 3. Ruta de Equilibrio
-La implementacion articulada de estas tres politicas en ${state} activa un ciclo virtuoso de restauracion sistemica tal como lo describe el marco del Balance Core: al fortalecer la Estructura, se generan las condiciones materiales que hacen viable el arraigo; al recuperar la Identidad, se reconstruye el tejido social; y al garantizar acceso digital y gestion hidrica, se crea la plataforma tecnologica e institucional sobre la cual las siguientes generaciones de ${state} pueden proyectar un desarrollo soberano, sostenible y resiliente.`;
+La articulacion coordinada de estas tres directrices estrategicas posiciona a ${state} como un entorno idoneo para el despliegue practico del modelo Balance Core. Al robustecer la base estructural material y propiciar un entorno de arraigo para la identidad colectiva, se sientan las plataformas solidas para que las innovaciones en conectividad y la etica planetaria actuen como catalizadores del desarrollo soberano. Este diagnostico constituye un mapa de ruta replicable y cientificamente sustentado para la toma de decisiones gubernamentales de alta precision.`;
 
   document.getElementById('aiContent').innerHTML = formatAIResponse(aiText);
   
-  // Guardar datos globales y prender el botón
+  // Guardar datos listos en la memoria y desplegar el botón dorado
   currentAnalysis = { state, dims, dimScores, iim, ime, agua, overallScore, aiText };
   document.getElementById('pdfBtn').style.display = 'inline-flex';
 
-  // Restaurar el botón original
+  // Desactivar estado de carga del botón de envío
   btn.disabled = false;
   btn.querySelector('.btn-text').style.display = 'flex';
   btn.querySelector('.btn-loader').style.display = 'none';
@@ -165,7 +166,7 @@ function animateScore(score) {
 
 function formatAIResponse(text) {
   let html = text
-    .replace(/\*\*(.+?)\*\"/g, '<strong>$1</strong>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^[-*•]\s+(.+)$/gm, '<li>$1</li>')
     .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
@@ -182,10 +183,10 @@ function downloadPDF() {
   try {
     const { state, dims, dimScores, iim, ime, agua, overallScore, aiText } = currentAnalysis;
     
-    // Inicializacion segura e independiente de jsPDF conforme a v2.5.1
+    // Inicialización compatible con jsPDF global en entornos estáticos
     const { jsPDF } = window.jspdf ? window.jspdf : window;
     if (!jsPDF) {
-      alert("Error: La libreria jsPDF no esta cargada correctamente.");
+      alert("Error: La libreria jsPDF no se encuentra cargada en el navegador.");
       return;
     }
     
@@ -207,7 +208,7 @@ function downloadPDF() {
     doc.setFontSize(11); doc.setFont('helvetica', 'normal'); doc.setTextColor(180, 170, 140);
     doc.text('Analisis multidimensional basado en el marco del Balance Core', margin + 10, 92);
 
-    // Cuadro de puntaje general
+    // Cuadro indicador de Balance General
     doc.setFillColor(17, 26, 62); doc.roundedRect(margin + 10, 110, 80, 40, 4, 4, 'F');
     doc.setDrawColor(201, 168, 76); doc.setLineWidth(0.5); doc.roundedRect(margin + 10, 110, 80, 40, 4, 4, 'S');
     
@@ -215,7 +216,7 @@ function downloadPDF() {
     doc.setFontSize(32); doc.setFont('helvetica', 'bold'); doc.setTextColor(240, 208, 128);
     doc.text(String(overallScore), margin + 50, 140, { align: 'center' });
 
-    // Mini bloques de dimensiones seleccionadas
+    // Cajas resumen de dimensiones
     const dimNames = { estructura: 'Estructura', identidad: 'Identidad', conectividad: 'Conectividad', etica: 'Etica Planetaria' };
     let bx = margin + 10, by = 165;
     dims.forEach((dim, i) => {
@@ -229,9 +230,9 @@ function downloadPDF() {
     doc.setTextColor(100, 98, 130); doc.setFontSize(8); doc.setFont('helvetica', 'normal');
     doc.text(`Generado el ${today} · Balance Core Mexico`, W / 2, H - 15, { align: 'center' });
 
-    // ---- PAGINA 2: DATOS E INDICADORES ----
+    // ---- PAGINA 2: INDICADORES ESTADÍSTICOS ----
     doc.addPage(); doc.setFillColor(5, 8, 22); doc.rect(0, 0, W, H, 'F'); doc.setFillColor(201, 168, 76); doc.rect(0, 0, 6, H, 'F');
-    y = 25; doc.setTextColor(201, 168, 76); doc.setFontSize(9); doc.text('DATOS DE DIAGNOSTICO', margin + 10, y);
+    y = 25; doc.setTextColor(201, 168, 76); doc.setFontSize(9); doc.text('DATOS DE DIAGNÓSTICO', margin + 10, y);
     doc.setFontSize(18); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255); y += 10;
     doc.text(`Indicadores Clave — ${state}`, margin + 10, y); y += 12;
 
@@ -247,7 +248,7 @@ function downloadPDF() {
     }
 
     if (dims.includes('estructura') && ime) {
-      addDataSection('Estructura — Indice de Marginacion', [['Grado de Marginacion Estatal', ime.GM_2020], ['Analfabetismo', `${ime.ANALF?.toFixed(1)}%`], ['Poblacion sin educacion basica', `${ime.SBASC?.toFixed(1)}%`]], y);
+      addDataSection('Estructura — Indice de Marginacion', [['Grado de Marginacion Estatal', ime.GM_2020], ['Analfabetismo', `${ime.ANALF?.toFixed(1)}%`], ['Poblacion sin education basica', `${ime.SBASC?.toFixed(1)}%`]], y);
     }
     if (dims.includes('identidad') && iim) {
       addDataSection('Identidad — Intensidad Migratoria Mexico-EUA', [['Grado de Intensidad', iim.gim_dp2], ['Posicion en ranking nacional', `#${iim.pos_nal} de 32`]], y);
@@ -261,9 +262,9 @@ function downloadPDF() {
     y = 25; doc.setTextColor(201, 168, 76); doc.setFontSize(9); doc.setFont('helvetica', 'normal'); doc.text('ANALISIS & ESTRATEGIA', margin + 10, y);
     doc.setFontSize(18); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255); y += 10; doc.text('Politicas Publicas Recomendadas', margin + 10, y); y += 15;
 
-    // Purificación rigurosa de texto para evitar que jsPDF tire error fatal
+    // Purificación rigurosa de texto plano para jsPDF estándar
     const cleanText = aiText
-      .replace(/\*\*/g, '')
+      .replace(/\*\"/g, '')
       .replace(/###/g, '')
       .replace(/[•]/g, '-')
       .replace(/[’]/g, "'");
@@ -290,7 +291,7 @@ function downloadPDF() {
     const safeStateName = state.replace(/\s+/g, '_');
     doc.save(`BalanceCore_${safeStateName}.pdf`);
   } catch (pdfError) {
-    console.error("Error crítico generando el PDF:", pdfError);
-    alert("Hubo un problema de codificación al compilar el PDF. Revisa la consola para más detalles.");
+    console.error("Error critico generando el PDF:", pdfError);
+    alert("Hubo un contratiempo con la compilación del reporte. Inténtalo de nuevo.");
   }
 }

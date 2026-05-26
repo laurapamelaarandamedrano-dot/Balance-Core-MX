@@ -7,12 +7,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- COSMIC BACKGROUND -->
 <div class="cosmos-bg">
   <div class="stars"></div>
   <div class="nebula n1"></div>
@@ -22,7 +23,6 @@
   <div class="orb orb2"></div>
 </div>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="header-inner">
     <div class="logo-group">
@@ -58,7 +58,6 @@
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-content">
     <div class="hero-overline">Plataforma de Inteligencia Pública · Prototipo México</div>
@@ -91,7 +90,6 @@
   </div>
 </section>
 
-<!-- PILLARS -->
 <section class="pillars-section">
   <div class="section-label">El Marco Analítico</div>
   <h2 class="section-title">Las 4 Dimensiones del Balance Core</h2>
@@ -131,7 +129,6 @@
   </div>
 </section>
 
-<!-- GENERATOR -->
 <section class="generator-section" id="generator">
   <div class="gen-header">
     <div class="section-label">Motor de Análisis</div>
@@ -192,15 +189,15 @@
         </div>
       </div>
     </div>
+    
     <button class="gen-btn" id="generateBtn" onclick="generateAnalysis()">
       <span class="btn-text">Generar Diagnóstico + PDF</span>
       <span class="btn-loader" style="display:none">
-        <span class="spinner"></span> Analizando...
+        <span class="spinner"></span> Analizando Cosmos...
       </span>
     </button>
   </div>
 
-  <!-- RESULTS -->
   <div class="results-container" id="results" style="display:none">
     <div class="results-header">
       <div class="state-badge" id="stateBadge"></div>
@@ -247,7 +244,6 @@
   </div>
 </section>
 
-<!-- GLOBAL VISION -->
 <section class="global-section">
   <div class="global-inner">
     <div class="global-label">Visión Planetaria</div>
@@ -262,7 +258,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-logo">
@@ -271,7 +266,7 @@
     </div>
     <div class="footer-note">
       <span class="pulse-dot small"></span>
-      Obra en constante mejora · Modelo replicable globalmente · Datos: CONAPO, INEGI, CONAGUA · IA: Claude (Anthropic)
+      Obra en constante mejora · Modelo replicable globalmente · Datos: CONAPO, INEGI, CONAGUA · Modelo de Inteligencia Local Autonóma
     </div>
     <div class="footer-theory">
       Fundamentado en <em>The Balance Core: A New Architecture of 21st-Century Power</em>
@@ -279,7 +274,7 @@
   </div>
 </footer>
 
-<script src="data.js"></script>
-<script src="app.js"></script>
+<script src="data.js?v=1.0.1"></script>
+<script src="app.js?v=1.0.1"></script>
 </body>
 </html>
